@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TweetBook.Domain;
 
 namespace TweetBook.Services
@@ -22,19 +23,19 @@ namespace TweetBook.Services
             }
         }
 
-        public List<Post> GetPosts()
+        public async Task<List<Post>> GetPostsAsync()
         {
-            return _posts;
+            return await Task<List<Post>>.Run(() => _posts);
         }
 
-        public Post GetPostById(Guid postId)
+        public async Task<Post> GetPostByIdAsync(Guid postId)
         {
-            return _posts.SingleOrDefault(x => x.Id == postId);
+            return await Task<Post>.Run(() => _posts.SingleOrDefault(x => x.Id == postId));
         }
 
-        public bool UpdatePost(Post postToUpdate)
+        public async Task<bool> UpdatePostAsync(Post postToUpdate)
         {
-            var exists = GetPostById(postToUpdate.Id) != null;
+            var exists = await GetPostByIdAsync(postToUpdate.Id) != null;
 
             if (!exists)
             {
@@ -46,9 +47,9 @@ namespace TweetBook.Services
             return true;
         }
 
-        public bool DeletePost(Guid postId)
+        public async Task<bool> DeletePostAsync(Guid postId)
         {
-            var post = GetPostById(postId);
+            var post = await GetPostByIdAsync(postId);
 
             if (post == null)
             {
@@ -56,6 +57,14 @@ namespace TweetBook.Services
             }
 
             _posts.Remove(post);
+            return true;
+        }
+
+        public async Task<bool> CreatePostAsync(Post post)
+        {
+            post.Id = Guid.NewGuid();
+            var posts = await GetPostsAsync();
+            posts.Add(post);
             return true;
         }
     }
