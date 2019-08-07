@@ -67,5 +67,10 @@ namespace TweetBook.Services
             posts.Add(post);
             return true;
         }
+
+        public Task<bool> UserOwnsPostAsync(Guid postId, string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
