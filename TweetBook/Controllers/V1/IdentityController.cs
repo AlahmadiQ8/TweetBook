@@ -37,7 +37,8 @@ namespace TweetBook.Controllers.V1
 
             return Ok(new AuthSuccessResponse
             {
-                Token = authResponse.Token
+                Token = authResponse.Token,
+                RefreshToken = authResponse.RefreshToken
             });
         }        
         
@@ -56,7 +57,8 @@ namespace TweetBook.Controllers.V1
 
             return Ok(new AuthSuccessResponse
             {
-                Token = authResponse.Token
+                Token = authResponse.Token,
+                RefreshToken = authResponse.RefreshToken
             });
         }
     }
