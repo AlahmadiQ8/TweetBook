@@ -14,7 +14,8 @@ namespace TweetBook.Installers
             services.AddDbContext<DataContext>(options =>
                 // options.UseSqlServer(
                 //     configuration.GetConnectionString("DefaultConnection"));
-                options.UseNpgsql(configuration.GetConnectionString("PostgresConnection"))
+//                options.UseNpgsql(configuration.GetConnectionString("PostgresConnection"))
+                options.UseSqlite("Data Source=TweeBook.db")
             );
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<DataContext>();
